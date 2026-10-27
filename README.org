@@ -15,3 +15,12 @@ qmk flash -kb zsa/voyager -km local
 #+end_src
 When it prints "Bootloader not found", press the reset button on the Voyager.
 Keymapp is not needed (it segfaults here).
+
+* Workflow
+1. Edit the files here. Each =LAYOUT_voyager(...)= has exactly 52 keys
+   (4 rows of 12, then 4 thumbs); =KC_NO= = off, =KC_TRANSPARENT= = base key.
+2. Check it builds: =qmk compile -kb zsa/voyager -km local= (in =../qmk-zsa=).
+3. Flash: =qmk flash -kb zsa/voyager -km local=, then press reset.
+4. Happy with it: commit. =git diff= shows changes, =git checkout <file>= undoes them.
+A broken layout cannot brick the board: the bootloader is never overwritten,
+and the reset button always gets back to it.
