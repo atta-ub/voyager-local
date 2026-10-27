@@ -1,0 +1,45 @@
+#+TITLE: Voyager layout overview
+#+DATE: 2026-10-26
+
+Keep this in sync with =keymap.c=. =✗= = disabled key (=KC_NO=).
+
+* Layer 0: base (Colemak-DH)
+#+begin_example
+         outer  pinky  ring   middle index  inner │ inner  index  middle ring   pinky  outer
+row 0    Esc    1      2      3      4      5     │ 6      7      8      9      0      CapsWord
+row 1    Tab    Q      W      F      P      B     │ J      L      U      Y      ;      Del
+row 2    Bksp   A      R      S      T      G     │ M      N      E      I      O      '
+  (held)        Meta   Shift  Alt    Ctrl         │        Ctrl   Alt    Shift  Meta
+row 3    ←      Z      X      C      D      V     │ K      H      ,      .      /      →
+thumbs                 Space / FN    ↓ / NUM      │ ↑ / NUM       Enter
+#+end_example
+
+* Layer 1: numbers and symbols (hold either lower thumb)
+#+begin_example
+row 0    ✗      ✗      \      !      ~      ✗     │ ✗      ✗      :      |      ✗      ✗
+row 1    -      _      [      {      (      <     │ >      )      }      ]      ;      "
+row 2    =      1      2      3      4      5     │ 6      7      8      9      0      '
+row 3    +      *      @      #      $      %     │ ^      &      ,      .      /      `
+thumbs                        Space  [held]       │ [held] Enter
+#+end_example
+
+* Layer 2: FN (hold Space, solid green)
+#+begin_example
+row 0    ✗      ✗      ✗      ✗      ✗      ✗     │ ✗      ✗      ✗      ✗      ✗      BOOT
+row 1    ✗      ←      ↓      ↑      →      ✗     │ ✗      ✗      F11    F12    ✗      ✗
+row 2    ✗      F1     F2     F3     F4     F5    │ F6     F7     F8     F9     F10    ✗
+row 3    ✗      Home   PgDn   PgUp   End    ✗     │ Mute   Vol-   Vol+   Prev   Play   Next
+thumbs                        [held] ✗            │ ✗      ✗
+#+end_example
+Media keys need the xmonad bindings in =dotfiles/desktop/wm/xmonad.org=.
+
+* Timing
+- Home row mods: 200 ms hold, 250 ms on A R I O (pinky, ring).
+- Chordal hold: a same-hand key while holding = tap; outer columns and thumbs
+  are exempt (T + Backspace = Ctrl+Backspace).
+- Flow tap: a home row key within 150 ms of a letter or Space = tap.
+- Space: time only (no permissive hold), like kanata's Space layer on the laptop.
+
+* Ideas for the free FN keys
+Brightness ±, Print Screen, lock/sleep, Ctrl+←/→, Ctrl+Tab, clipboard,
+mouse keys (MOUSEKEY_ENABLE), F13-F24 for own shortcuts, macros, LED controls.

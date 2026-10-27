@@ -1,5 +1,7 @@
 #+TITLE: ZSA Voyager keymap (local QMK)
 
+Layer overview: [[file:layout.org][layout.org]].
+
 * Configure
 - Keys and layers: =keymap.c= (layer 0 base, 1 numbers/symbols, 2 F-keys).
 - Hold timing and misfire guards: =config.h=, plus =chordal_hold_layout= and
