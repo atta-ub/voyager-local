@@ -33,6 +33,19 @@ thumbs                        [held] ✗            │ ✗      ✗
 #+end_example
 Media keys need the xmonad bindings in =dotfiles/desktop/wm/xmonad.org=.
 
+* Thumb keys (Voyager and Moonlander)
+The Moonlander (=../moonlander-local=) uses the same layers. Its extra keys
+are off on every layer: the 3-key inner columns, the 5-key bottom row, the red
+thumb keys and the innermost thumb keys.
+#+begin_example
+                     Voyager                Moonlander
+Space / FN           left upper             left outer
+↓ / NUM              left lower             left middle
+↑ / NUM              right lower            right middle
+Enter                right upper            right outer
+off                  —                      red keys, innermost keys
+#+end_example
+
 * Timing
 - Home row mods: 200 ms hold, 250 ms on A R I O (pinky, ring).
 - Chordal hold: a same-hand key while holding = tap; outer columns and thumbs
