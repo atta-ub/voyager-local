@@ -13,7 +13,8 @@ Uses ZSA's QMK fork in =../qmk-zsa= (branch =firmware25=), where
 cd /var/projects/atlas-iade/dev/zsa/qmk-zsa
 qmk flash -kb zsa/voyager -km local
 #+end_src
-When it prints "Bootloader not found", press the reset button on the Voyager.
+When it prints "Bootloader not found", hold Space and press the top-right key
+(QK_BOOT), or press the reset button on the Voyager.
 Keymapp is not needed (it segfaults here).
 
 * Workflow
