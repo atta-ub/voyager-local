@@ -7,6 +7,7 @@
 // Home row mod held + another key pressed and released inside the hold = mod,
 // so a quick Ctrl (T or N) + Backspace is Ctrl+Backspace, not "t" + Backspace.
 #define PERMISSIVE_HOLD
+#define PERMISSIVE_HOLD_PER_KEY
 
 // Misfire guards, matching the laptop's kanata setup (notes/system/keyboard-remapping.org):
 // 200 ms hold, 250 ms on pinky/ring (keymap.c); a same-hand key while holding = tap;
