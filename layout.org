@@ -11,8 +11,10 @@ row 1    Tab    Q      W      F      P      B     │ J      L      U      Y    
 row 2    Bksp   A      R      S      T      G     │ M      N      E      I      O      '
   (held)        Meta   Shift  Alt    Ctrl         │        Ctrl   Alt    Shift  Meta
 row 3    ←      Z      X      C      D      V     │ K      H      ,      .      /      →
-thumbs                 Space / FN    ↓ / NUM      │ ↑ / NUM       Enter
+thumbs                 Space / FN    ↓ / NUM      │ ↑ / NUM       Enter / Meta
 #+end_example
+Meta (xmonad mod) is in three places: hold A, hold O, or hold Enter (thumb,
+easier on the pinky).
 
 * Layer 1: numbers and symbols (hold either lower thumb)
 #+begin_example
@@ -42,7 +44,7 @@ thumb keys and the innermost thumb keys.
 Space / FN           left upper             left outer
 ↓ / NUM              left lower             left middle
 ↑ / NUM              right lower            right middle
-Enter                right upper            right outer
+Enter / Meta         right upper            right outer
 off                  —                      red keys, innermost keys
 #+end_example
 
@@ -52,6 +54,8 @@ off                  —                      red keys, innermost keys
   are exempt (T + Backspace = Ctrl+Backspace).
 - Flow tap: a home row key within 150 ms of a letter or Space = tap.
 - Space: time only (no permissive hold), like kanata's Space layer on the laptop.
+- Enter / Meta: 200 ms hold, permissive hold, no flow tap, so Meta works
+  right after typing.
 
 * Ideas for the free FN keys
 Brightness ±, Print Screen, lock/sleep, Ctrl+←/→, Ctrl+Tab, clipboard,
