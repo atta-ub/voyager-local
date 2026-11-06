@@ -31,7 +31,7 @@ thumbs   upper: Space   lower: [held]             │ lower: [held]   upper: Ent
 * Layer 2: FN (hold Space, blue)
 #+begin_example
          outer  pinky  ring   middle index  inner │ inner  index  middle ring   pinky  outer
-row 0    ✗      ✗      ✗      ✗      ✗      ✗     │ ✗      ✗      ✗      ✗      ✗      BOOT
+row 0    ✗      Th1    Th2    Th3    Th4    Th5   │ LEDs   Brght  Dim    ✗      ✗      BOOT
 row 1    ✗      ←      ↓      ↑      →      ✗     │ ✗      ✗      F11    F12    ✗      ✗
 row 2    ✗      F1     F2     F3     F4     F5    │ F6     F7     F8     F9     F10    ✗
 row 3    ✗      Home   PgDn   PgUp   End    ✗     │ Mute   Vol-   Vol+   Prev   Play   Next
@@ -39,6 +39,8 @@ row 3    ✗      Home   PgDn   PgUp   End    ✗     │ Mute   Vol-   Vol+   P
 thumbs   upper: [held]   lower: ✗                 │ lower: ✗   upper: ✗
 #+end_example
 Media keys need the xmonad bindings in =dotfiles/desktop/wm/xmonad.org=.
+Th1-Th5 = LED themes, LEDs = all lights on/off, Brght/Dim = brightness
+toggles (see LEDs below).
 
 * Thumb keys (Voyager and Moonlander)
 #+begin_example
@@ -51,7 +53,23 @@ off                  —                      red keys, innermost keys
 #+end_example
 
 * LEDs (same on both boards)
-- One colour per layer: 0 green, 1 violet, 2 blue (brightness 150; highlights 230-255).
+- One colour per layer, set by the theme; theme 1: 0 green, 1 violet, 2 blue
+  (brightness 150; highlights 230-255). Colours below are theme 1's.
+- Themes: hold Space, then the top row picks one (kept after unplugging);
+  each theme key glows in its theme's base colour.
+  | Key | Theme         | Base    | Mods  | Layer 1 | Layer 2       |
+  |-----+---------------+---------+-------+---------+---------------|
+  | 1   | Green + coral | green   | coral | violet  | blue          |
+  | 2   | Teal + coral  | teal    | coral | pink    | deep blue     |
+  | 3   | Las Vegas     | purple  | gold  | hot pink| electric blue |
+  | 4   | Classic       | blue    | amber | indigo  | green         |
+  | 5   | Dark (ef)     | dim     | coral | dim     | dim           |
+  Key 6 turns all LEDs on/off (=RM_TOGG=); unplugging turns them back on.
+  Key 7 = Bright toggle: every colour below 200 is raised to 200 (=BRIGHT_VAL=);
+  brighter ones, like the mods, stay. Key 8 = Dim toggle: everything at 35%
+  (=DIM_PERCENT=). One turns the other off; the active key glows white;
+  the mode is kept after unplugging, with the theme.
+  Colours: the =themes= table in =keymap.c=.
 - Keys that are a modifier on hold on the base layer (R S T G, M N E I,
   Enter / Meta) are coral on the base layer. The firmware finds every =MT(...)=
   key in layer 0 at start-up, so a moved mod moves its colour.
