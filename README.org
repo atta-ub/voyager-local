@@ -7,6 +7,14 @@ Layer overview: [[file:layout.org][layout.org]].
 - Hold timing and misfire guards: =config.h=, plus =chordal_hold_layout= and
   =get_tapping_term= in =keymap.c=.
 - Features on/off (Caps Word, ...): =rules.mk=.
+- LEDs: =keymap.c=. Colours are {hue, saturation, brightness}, 0-255; the
+  board brightness keys scale them all.
+  - Layer colours: =ledmap=.
+  - Key highlights (mods, groups, Caps Word, boot, unused): =kind_colors=.
+  - Thumb layer keys: =LAYER_TAP_VAL= (their colour is the target layer's).
+  - Which key gets which colour is worked out from the keymap at start-up, so
+    moving a key moves its colour. What each colour means: =layout.org=, LEDs.
+  - Idle timeout (lights off): =RGB_MATRIX_TIMEOUT= in =config.h=.
 
 * Flash
 Uses ZSA's QMK fork in =../qmk-zsa= (branch =firmware25=), where
@@ -16,7 +24,9 @@ cd /var/projects/atlas-iade/dev/zsa/qmk-zsa
 qmk flash -kb zsa/voyager -km local
 #+end_src
 When it prints "Bootloader not found", hold Space and press the top-right key
-(QK_BOOT), or press the reset button on the Voyager.
+(QK_BOOT, lit red), or press the reset button on the Voyager.
+Both boards use the same STM32 bootloader, so =qmk flash= writes to whichever
+board is in reset: plug in only the board you mean to flash.
 Keymapp is not needed (it segfaults here).
 
 * Workflow
