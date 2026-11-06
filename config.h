@@ -4,6 +4,10 @@
 
 #define RGB_MATRIX_STARTUP_SPD 60
 
+// All LEDs off after 5 minutes without a key press; the next key turns them
+// back on (that key still types). 2026-11-06, Voyager first.
+#define RGB_MATRIX_TIMEOUT 300000  // ms
+
 // Home row mod held + another key pressed and released inside the hold = mod,
 // so a quick Ctrl (T or N) + Backspace is Ctrl+Backspace, not "t" + Backspace.
 #define PERMISSIVE_HOLD

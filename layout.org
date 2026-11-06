@@ -28,7 +28,7 @@ row 3    +      *      @      #      $      %     │ ^      &      ,      .    
 thumbs   upper: Space   lower: [held]             │ lower: [held]   upper: Enter
 #+end_example
 
-* Layer 2: FN (hold Space, solid green)
+* Layer 2: FN (hold Space, blue)
 #+begin_example
          outer  pinky  ring   middle index  inner │ inner  index  middle ring   pinky  outer
 row 0    ✗      ✗      ✗      ✗      ✗      ✗     │ ✗      ✗      ✗      ✗      ✗      BOOT
@@ -49,6 +49,26 @@ Space / FN           left upper             left outer
 Enter / Meta         right upper            right outer
 off                  —                      red keys, innermost keys
 #+end_example
+
+* LEDs (same on both boards)
+- One colour per layer: 0 green, 1 violet, 2 blue (brightness 150; highlights 230-255).
+- Keys that are a modifier on hold on the base layer (R S T G, M N E I,
+  Enter / Meta) are coral on the base layer. The firmware finds every =MT(...)=
+  key in layer 0 at start-up, so a moved mod moves its colour.
+- A mod key turns white while you hold it and its modifier is really on
+  (every layer), so a hold that became Shift/Ctrl/Alt/Meta is easy to see.
+- Layers 1 and 2 colour keys by group: numbers yellow, arrows white,
+  Home/End/PgUp/PgDn white, F-keys yellow, media pink; symbols keep the
+  layer colour. These win over coral, which is why coral is base-layer only.
+- Caps Word on: the letter keys and the Caps Word key (top right) are magenta
+  on the base layer until Caps Word ends.
+- Keys that are =KC_NO= on the current layer are off, so a held layer shows
+  only its working keys. For a dim colour, change =LED_UNUSED= in =kind_colors=.
+- QK_BOOT (layer 2, top right) is red.
+- The layer-tap thumb keys show the colour of the layer they open, brighter,
+  on the base layer: Space blue (layer 2), ↓ and ↑ violet (layer 1).
+- All LEDs turn off after 5 minutes without a key press; the next key turns
+  them back on and still types (=RGB_MATRIX_TIMEOUT= in =config.h=).
 
 * Timing (same on both boards)
 - Home row mods: 200 ms hold, 250 ms on R I (ring).
