@@ -26,6 +26,11 @@ enum custom_keycodes {
 #define REP_NUM  LT(1, KC_F24)
 #define BSPC_NUM LT(1, KC_BSPC)
 
+// Emacs keys on layer 2 (hold Space), 2026-11-07: they send the usual bindings.
+#define EMX_EXPAND  LCTL(KC_EQUAL)  // Enter thumb: C-=  er/expand-region (then = / - / 0)
+#define EMX_MC_PREV LCTL(KC_LABK)   // 9 position:  C-<  mc/mark-previous-like-this
+#define EMX_MC_NEXT LCTL(KC_RABK)   // ; position:  C->  mc/mark-next-like-this
+
 // Local keymap, started from Oryx layout xL0xx/ZPj7mz (2026-10-26).
 // Layer 0: Colemak-DH base, 1: numbers and symbols (hold either lower thumb),
 // 2: F-keys, arrows, Home/End/PgUp/PgDn, media, QK_BOOT top right (hold Space, as on the laptop);
@@ -53,11 +58,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     KC_SPACE,       KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_ENTER
   ),
   [2] = LAYOUT_voyager(
-    QK_LLCK,        THEME_1,        THEME_2,        THEME_3,        THEME_4,        THEME_5,                                        RM_TOGG,        LED_BRIGHT,     LED_DIM,        KC_NO,          KC_NO,          QK_BOOT,
-    KC_NO,          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_NO,                                          DM_KEY1,        DM_KEY2,        KC_F11,         KC_F12,         KC_NO,          KC_NO,
+    QK_LLCK,        THEME_1,        THEME_2,        THEME_3,        THEME_4,        THEME_5,                                        RM_TOGG,        LED_BRIGHT,     LED_DIM,        EMX_MC_PREV,    KC_NO,          QK_BOOT,
+    KC_NO,          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_NO,                                          DM_KEY1,        DM_KEY2,        KC_F11,         KC_F12,         EMX_MC_NEXT,    KC_NO,
     KC_NO,          KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,                                          KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_NO,
     KC_NO,          KC_HOME,        KC_PGDN,        KC_PAGE_UP,     KC_END,         KC_NO,                                          KC_AUDIO_MUTE,  KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_MEDIA_PREV_TRACK,KC_MEDIA_PLAY_PAUSE,KC_MEDIA_NEXT_TRACK,
-                                                    KC_TRANSPARENT, KC_NO,                                          KC_NO,          KC_NO
+                                                    KC_TRANSPARENT, KC_NO,                                          KC_NO,          EMX_EXPAND
   ),
 };
 

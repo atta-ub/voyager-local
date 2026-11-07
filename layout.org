@@ -43,16 +43,18 @@ thumbs   upper: Space   lower: [held]             │ lower: [held]   upper: Ent
 * Layer 2: FN (hold Space, blue)
 #+begin_example
          outer  pinky  ring   middle index  inner │ inner  index  middle ring   pinky  outer
-row 0    Lock   Th1    Th2    Th3    Th4    Th5   │ LEDs   Brght  Dim    ✗      ✗      BOOT
-row 1    ✗      ←      ↓      ↑      →      ✗     │ M1     M2     F11    F12    ✗      ✗
+row 0    Lock   Th1    Th2    Th3    Th4    Th5   │ LEDs   Brght  Dim    C-<    ✗      BOOT
+row 1    ✗      ←      ↓      ↑      →      ✗     │ M1     M2     F11    F12    C->    ✗
 row 2    ✗      F1     F2     F3     F4     F5    │ F6     F7     F8     F9     F10    ✗
 row 3    ✗      Home   PgDn   PgUp   End    ✗     │ Mute   Vol-   Vol+   Prev   Play   Next
 
-thumbs   upper: [held]   lower: ✗                 │ lower: ✗   upper: ✗
+thumbs   upper: [held]   lower: ✗                 │ lower: ✗   upper: C-=
 #+end_example
 Media keys need the xmonad bindings in =dotfiles/desktop/wm/xmonad.org=.
 Th1-Th5 = LED themes, LEDs = all lights on/off, Brght/Dim = brightness
 toggles (see LEDs below).
+Emacs keys (2026-11-07): Enter thumb = C-= (expand-region; then = / - / 0),
+C-< (9) / C-> (;) = multiple-cursors mark previous / next like this.
 
 * Thumb keys (Voyager and Moonlander)
 #+begin_example
