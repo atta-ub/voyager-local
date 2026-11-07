@@ -9,8 +9,8 @@ Layer overview: [[file:layout.org][layout.org]].
 - Features on/off (Caps Word, ...): =rules.mk=.
 - LEDs: =keymap.c=. Colours are {hue, saturation, brightness}, 0-255; the
   board brightness keys scale them all.
-  - Layer colours: =ledmap=.
-  - Key highlights (mods, groups, Caps Word, boot, unused): =kind_colors=.
+  - All colours: the =themes= table (5 themes: layer colours + key highlights).
+  - Bright/Dim levels: =BRIGHT_VAL=, =DIM_PERCENT=.
   - Thumb layer keys: =LAYER_TAP_VAL= (their colour is the target layer's).
   - Which key gets which colour is worked out from the keymap at start-up, so
     moving a key moves its colour. What each colour means: =layout.org=, LEDs.

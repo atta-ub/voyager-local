@@ -15,40 +15,54 @@ enum custom_keycodes {
   THEME_5,
   LED_BRIGHT,
   LED_DIM,
+  DM_KEY1,  // dynamic macro 1: base top right, and layer 2 J position
+  DM_KEY2,  // dynamic macro 2: layer 2 L position
 };
+
+// Lower thumbs (2026-11-06): hold = layer 1 (numbers) on both.
+// Left tap = Repeat Key (repeats the last key; F24 is only a placeholder,
+// see process_record_user). Right tap = Backspace (was Down/Up arrows);
+// Shift + right tap = Delete.
+#define REP_NUM  LT(1, KC_F24)
+#define BSPC_NUM LT(1, KC_BSPC)
 
 // Local keymap, started from Oryx layout xL0xx/ZPj7mz (2026-10-26).
 // Layer 0: Colemak-DH base, 1: numbers and symbols (hold either lower thumb),
 // 2: F-keys, arrows, Home/End/PgUp/PgDn, media, QK_BOOT top right (hold Space, as on the laptop);
 //    top row: 1-5 = LED themes, 6 = all LEDs on/off, 7 = Bright, 8 = Dim.
 // Enter: tap = Enter, hold = Meta (xmonad mod), next to Meta on G and M.
+// Dynamic macros (2026-11-07): macro 1 = base top right and layer 2 J position,
+// macro 2 = layer 2 L position (left of F11/F12). Hold = start recording,
+// tap while recording = stop, tap = play. Caps Word is on both Shifts (R + I).
+// Top-left key on every layer = Layer Lock (2026-11-06): hold a layer key, tap it
+// to keep that layer on; tap it again to go back. Glows white while locked.
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
-    KC_ESCAPE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           CW_TOGG,
+    QK_LLCK,        KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           DM_KEY1,
     KC_TAB,         KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,                                           KC_J,           KC_L,           KC_U,           KC_Y,           KC_SCLN,        KC_DELETE,
-    KC_BSPC,        KC_A,           MT(MOD_LSFT, KC_R),MT(MOD_LALT, KC_S),MT(MOD_LCTL, KC_T),MT(MOD_LGUI, KC_G),                                         MT(MOD_RGUI, KC_M),MT(MOD_RCTL, KC_N),MT(MOD_LALT, KC_E),MT(MOD_RSFT, KC_I),KC_O,           KC_QUOTE,
+    KC_ESCAPE,      KC_A,           MT(MOD_LSFT, KC_R),MT(MOD_LALT, KC_S),MT(MOD_LCTL, KC_T),MT(MOD_LGUI, KC_G),                                         MT(MOD_RGUI, KC_M),MT(MOD_RCTL, KC_N),MT(MOD_LALT, KC_E),MT(MOD_RSFT, KC_I),KC_O,           KC_QUOTE,
     KC_LEFT,        KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,                                           KC_K,           KC_H,           KC_COMMA,       KC_DOT,         KC_SLASH,       KC_RIGHT,
-                                                    LT(2, KC_SPACE),LT(1, KC_DOWN),                                 LT(1, KC_UP),   MT(MOD_RGUI, KC_ENTER)
+                                                    LT(2, KC_SPACE),REP_NUM,                                 BSPC_NUM,   MT(MOD_RGUI, KC_ENTER)
   ),
   [1] = LAYOUT_voyager(
-    KC_NO,          KC_NO,          KC_BSLS,        KC_EXLM,        KC_TILD,        KC_NO,                                          KC_NO,          KC_NO,          KC_COLN,        KC_PIPE,        KC_NO,          KC_NO,
+    QK_LLCK,        KC_NO,          KC_BSLS,        KC_EXLM,        KC_TILD,        KC_NO,                                          KC_NO,          KC_NO,          KC_COLN,        KC_PIPE,        KC_NO,          KC_NO,
     KC_MINUS,       KC_PLUS,        KC_LBRC,        KC_LCBR,        KC_LPRN,        KC_UNDS,                                        KC_MINUS,       KC_RPRN,        KC_RCBR,        KC_RBRC,        KC_SCLN,        KC_DQUO,
     KC_EQUAL,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_QUOTE,
     KC_PLUS,        KC_ASTR,        KC_AT,          KC_HASH,        KC_DLR,         KC_PERC,                                        KC_CIRC,        KC_AMPR,        KC_COMMA,       KC_DOT,         KC_SLASH,       KC_GRAVE,
                                                     KC_SPACE,       KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_ENTER
   ),
   [2] = LAYOUT_voyager(
-    KC_NO,          THEME_1,        THEME_2,        THEME_3,        THEME_4,        THEME_5,                                        RM_TOGG,        LED_BRIGHT,     LED_DIM,        KC_NO,          KC_NO,          QK_BOOT,
-    KC_NO,          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_NO,                                          KC_NO,          KC_NO,          KC_F11,         KC_F12,         KC_NO,          KC_NO,
+    QK_LLCK,        THEME_1,        THEME_2,        THEME_3,        THEME_4,        THEME_5,                                        RM_TOGG,        LED_BRIGHT,     LED_DIM,        KC_NO,          KC_NO,          QK_BOOT,
+    KC_NO,          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_NO,                                          DM_KEY1,        DM_KEY2,        KC_F11,         KC_F12,         KC_NO,          KC_NO,
     KC_NO,          KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,                                          KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_NO,
     KC_NO,          KC_HOME,        KC_PGDN,        KC_PAGE_UP,     KC_END,         KC_NO,                                          KC_AUDIO_MUTE,  KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_MEDIA_PREV_TRACK,KC_MEDIA_PLAY_PAUSE,KC_MEDIA_NEXT_TRACK,
                                                     KC_TRANSPARENT, KC_NO,                                          KC_NO,          KC_NO
   ),
 };
 
-// Chordal Hold handedness. Outer columns (Esc, Tab, Backspace, arrows, Del, ...)
-// and thumbs are '*', so T + Backspace still gives Ctrl+Backspace and
+// Chordal Hold handedness. Outer columns (Esc, Tab, arrows, Del, ...) and
+// thumbs are '*', so T + the Backspace thumb still gives Ctrl+Backspace and
 // thumb layer keys never turn into taps.
 const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT_voyager(
   '*', 'L', 'L', 'L', 'L', 'L',      'R', 'R', 'R', 'R', 'R', '*',
@@ -83,6 +97,23 @@ RGB hsv_to_rgb_with_value(HSV hsv) {
   return (RGB){ f * rgb.r, f * rgb.g, f * rgb.b };
 }
 
+// Dynamic macros, two slots, one key each: hold = record, tap = stop / play.
+static uint8_t  dm_recording = 0;      // slot being recorded (1 or 2), 0 = none
+static bool     dm_stopping  = false;  // this press stopped a recording
+static uint16_t dm_timer     = 0;
+
+bool dynamic_macro_record_start_user(int8_t direction) { dm_recording = direction > 0 ? 1 : 2; return true; }
+bool dynamic_macro_record_end_user(int8_t direction)   { dm_recording = 0; return true; }
+
+// Not recorded: the macro keys, Layer Lock, and layer-key holds (Space for
+// layer 2, the number thumbs). Otherwise replaying could leave a layer stuck on.
+// Taps of those thumbs (Space, Backspace, Repeat) are recorded as usual.
+bool dynamic_macro_valid_key_user(uint16_t keycode, keyrecord_t *record) {
+  if (keycode == DM_KEY1 || keycode == DM_KEY2 || keycode == QK_LLCK) return false;
+  if (IS_QK_LAYER_TAP(keycode) && record->tap.count == 0) return false;
+  return true;
+}
+
 // ---------------------------------------------------------------------------
 // LEDs: themes and per-key colours (the same code on the Voyager and Moonlander).
 // Colours are {hue, sat, val}, 0-255; val is scaled by the board brightness keys.
@@ -96,6 +127,8 @@ RGB hsv_to_rgb_with_value(HSV hsv) {
 // - Caps Word, base layer: letters and the Caps Word key while Caps Word is on.
 // - Groups, layers 1 and 2: numbers, arrows, Home/End/PgUp/PgDn, F-keys, media.
 // - Theme keys (layer 2): each shows its own theme's base colour.
+// - Layer Lock key (top left): white while the current layer is locked.
+// - Macro keys (top right; layer 2 J and L): red while their macro is recording.
 // - Mod-tap, base layer: home-row mods and Enter/Meta.
 // - Layer tap, base layer: Space, Down, Up show the colour of the layer they open.
 // Everything else has the layer colour.
@@ -116,6 +149,8 @@ enum led_kind {
   LED_LAYER_TAP = LED_KIND_COUNT,  // colour = theme layer colour of the target layer
   LED_THEME,                       // colour = that theme's base colour
   LED_MODE_KEY,                    // Bright/Dim key: white while its mode is on
+  LED_LOCK_KEY,                    // Layer Lock key: white while a layer is locked
+  LED_MACRO_KEY,                   // macro key: red while its slot is recording
 };
 
 #define THEME_LAYERS 3
@@ -279,6 +314,11 @@ static void find_led_kinds(void) {
           kind = LED_THEME;
           arg  = kc - THEME_1;
         }
+        else if (kc == QK_LLCK)                  kind = LED_LOCK_KEY;
+        else if (kc == DM_KEY1 || kc == DM_KEY2) {
+          kind = LED_MACRO_KEY;
+          arg  = kc == DM_KEY1 ? 1 : 2;
+        }
         else if (kc == LED_BRIGHT || kc == LED_DIM) {
           kind = LED_MODE_KEY;
           arg  = kc == LED_BRIGHT ? MODE_BRIGHT : MODE_DIM;
@@ -329,6 +369,14 @@ static void set_layer_color(uint8_t layer) {
       kind = LED_MOD_HELD;
     }
     RGB c;
+    if (kind == LED_MACRO_KEY) {
+      if (dm_recording != arg) continue;  // layer colour unless this slot records
+      kind = LED_BOOT;              // red while recording
+    }
+    if (kind == LED_LOCK_KEY) {
+      if (!is_layer_locked(layer)) continue;  // layer colour while unlocked
+      kind = LED_MOD_HELD;                    // white while locked
+    }
     if (kind == LED_MODE_KEY) {
       if (current_mode != arg) continue;  // layer colour while off
       kind = LED_MOD_HELD;                // white while on
@@ -387,8 +435,50 @@ bool rgb_matrix_indicators_user(void) {
 
 
 
+// The Repeat thumb itself is never the key to repeat.
+bool remember_last_key_user(uint16_t keycode, keyrecord_t *record, uint8_t *remembered_mods) {
+  return keycode != REP_NUM;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+  case REP_NUM:
+    if (record->tap.count) {  // tap = repeat the last key; hold = layer 1 as usual
+      repeat_key_invoke(&record->event);
+      return false;
+    }
+    break;
+  case DM_KEY1:
+  case DM_KEY2:
+    // Recording stops on the press (either macro key stops it); record/play
+    // start on the release, as the built-in DM_ keys expect.
+    // Held longer than TAPPING_TERM = record, shorter = play.
+    if (record->event.pressed) {
+      dm_timer    = timer_read();
+      dm_stopping = dm_recording != 0;
+      if (dm_stopping) process_dynamic_macro(QK_DYNAMIC_MACRO_RECORD_STOP, record);
+    } else if (!dm_stopping) {
+      bool hold = timer_elapsed(dm_timer) >= TAPPING_TERM;
+      if (keycode == DM_KEY1) {
+        process_dynamic_macro(hold ? QK_DYNAMIC_MACRO_RECORD_START_1 : QK_DYNAMIC_MACRO_PLAY_1, record);
+      } else {
+        process_dynamic_macro(hold ? QK_DYNAMIC_MACRO_RECORD_START_2 : QK_DYNAMIC_MACRO_PLAY_2, record);
+      }
+    }
+    return false;
+  case BSPC_NUM:
+    // Shift + tap = Delete (2026-11-06); hold = layer 1 as usual. Done here, not
+    // with a key override, because the tap is part of a layer-tap key.
+    if (record->tap.count && (get_mods() & MOD_MASK_SHIFT)) {
+      if (record->event.pressed) {
+        uint8_t mods = get_mods();
+        del_mods(MOD_MASK_SHIFT);
+        tap_code(KC_DEL);
+        set_mods(mods);
+      }
+      return false;
+    }
+    break;
   case THEME_1 ... THEME_5:
     if (record->event.pressed) set_theme(keycode - THEME_1);
     return false;

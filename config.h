@@ -9,7 +9,7 @@
 #define RGB_MATRIX_TIMEOUT 300000  // ms
 
 // Home row mod held + another key pressed and released inside the hold = mod,
-// so a quick Ctrl (T or N) + Backspace is Ctrl+Backspace, not "t" + Backspace.
+// so a quick Ctrl (T or N) + Backspace (right thumb) is Ctrl+Backspace, not "t" + Backspace.
 #define PERMISSIVE_HOLD
 #define PERMISSIVE_HOLD_PER_KEY
 
@@ -20,3 +20,11 @@
 #define TAPPING_TERM_PER_KEY
 #define CHORDAL_HOLD
 #define FLOW_TAP_TERM 150
+
+// Caps Word also turns on by holding both Shifts (R and I) together until both
+// count as held (~250 ms), then letting go. 2026-11-06.
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+
+// Dynamic macros: room for 256 key events (about 128 keystrokes), shared by the
+// two macros (default 128). 2026-11-07.
+#define DYNAMIC_MACRO_SIZE 256
