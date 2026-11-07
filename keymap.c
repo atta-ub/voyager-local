@@ -5,7 +5,7 @@
 #define ZSA_SAFE_RANGE SAFE_RANGE
 #endif
 
-// LED keys (layer 2 top row): themes on 1-5, Bright and Dim toggles on 7 and 8.
+// LED keys (layer 3 top row): themes on 1-5, Bright and Dim toggles on 7 and 8.
 // See the LED section below.
 enum custom_keycodes {
   THEME_1 = ZSA_SAFE_RANGE,
@@ -15,8 +15,12 @@ enum custom_keycodes {
   THEME_5,
   LED_BRIGHT,
   LED_DIM,
-  DM_KEY1,  // dynamic macro 1: base top right, and layer 2 J position
+  DM_KEY1,  // dynamic macro 1: layer 2 J position
   DM_KEY2,  // dynamic macro 2: layer 2 L position
+  EMX_CC_A,  // C-c a ... C-c z: one keycode per letter, see CC() below
+  EMX_CC_Z = EMX_CC_A + 25,
+  EMX_CX_A,  // C-x a ... C-x z, see CX() below
+  EMX_CX_Z = EMX_CX_A + 25,
 };
 
 // Lower thumbs (2026-11-06): hold = layer 1 (numbers) on both.
@@ -30,13 +34,20 @@ enum custom_keycodes {
 #define EMX_EXPAND  LCTL(KC_EQUAL)  // Enter thumb: C-=  er/expand-region (then = / - / 0)
 #define EMX_MC_PREV LCTL(KC_LABK)   // 9 position:  C-<  mc/mark-previous-like-this
 #define EMX_MC_NEXT LCTL(KC_RABK)   // ; position:  C->  mc/mark-next-like-this
+// C-c keys (2026-11-07): CC(KC_A) taps C-c then a, and so on, for the C-c
+// prefixes of the Emacs config. Hold Space, tap the key, let go of Space,
+// then type the command letter, e.g. Bksp thumb (C-c r) then j = C-c r j.
+#define CC(kc) (EMX_CC_A + ((kc) - KC_A))
+// C-x keys, the same way: CX(KC_P) = C-x p, project.el (B position, 2026-11-07).
+#define CX(kc) (EMX_CX_A + ((kc) - KC_A))
 
 // Local keymap, started from Oryx layout xL0xx/ZPj7mz (2026-10-26).
 // Layer 0: Colemak-DH base, 1: numbers and symbols (hold either lower thumb),
-// 2: F-keys, arrows, Home/End/PgUp/PgDn, media, QK_BOOT top right (hold Space, as on the laptop);
+// 2: F-keys, arrows, Home/End/PgUp/PgDn, C-c keys, QK_BOOT top right (hold Space, as on the laptop);
+// 3: LED themes and media (2026-11-07): the top-right key turns it on, tap it again to go back;
 //    top row: 1-5 = LED themes, 6 = all LEDs on/off, 7 = Bright, 8 = Dim.
 // Enter: tap = Enter, hold = Meta (xmonad mod), next to Meta on G and M.
-// Dynamic macros (2026-11-07): macro 1 = base top right and layer 2 J position,
+// Dynamic macros (2026-11-07): macro 1 = layer 2 J position,
 // macro 2 = layer 2 L position (left of F11/F12). Hold = start recording,
 // tap while recording = stop, tap = play. Caps Word is on both Shifts (R + I).
 // Top-left key on every layer = Layer Lock (2026-11-06): hold a layer key, tap it
@@ -44,7 +55,7 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
-    QK_LLCK,        KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           DM_KEY1,
+    QK_LLCK,        KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           TG(3),
     KC_TAB,         KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,                                           KC_J,           KC_L,           KC_U,           KC_Y,           KC_SCLN,        KC_DELETE,
     KC_ESCAPE,      KC_A,           MT(MOD_LSFT, KC_R),MT(MOD_LALT, KC_S),MT(MOD_LCTL, KC_T),MT(MOD_LGUI, KC_G),                                         MT(MOD_RGUI, KC_M),MT(MOD_RCTL, KC_N),MT(MOD_LALT, KC_E),MT(MOD_RSFT, KC_I),KC_O,           KC_QUOTE,
     KC_LEFT,        KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,                                           KC_K,           KC_H,           KC_COMMA,       KC_DOT,         KC_SLASH,       KC_RIGHT,
@@ -58,11 +69,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     KC_SPACE,       KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_ENTER
   ),
   [2] = LAYOUT_voyager(
-    QK_LLCK,        THEME_1,        THEME_2,        THEME_3,        THEME_4,        THEME_5,                                        RM_TOGG,        LED_BRIGHT,     LED_DIM,        EMX_MC_PREV,    KC_NO,          QK_BOOT,
-    KC_NO,          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_NO,                                          DM_KEY1,        DM_KEY2,        KC_F11,         KC_F12,         EMX_MC_NEXT,    KC_NO,
+    QK_LLCK,        CC(KC_A),       CC(KC_C),       CC(KC_D),       CC(KC_N),       CC(KC_S),                                       CC(KC_I),       CC(KC_E),       CC(KC_F),       EMX_MC_PREV,    KC_NO,          QK_BOOT,
+    KC_NO,          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       CX(KC_P),                                       DM_KEY1,        DM_KEY2,        KC_F11,         KC_F12,         EMX_MC_NEXT,    KC_NO,
     KC_NO,          KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,                                          KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_NO,
-    KC_NO,          KC_HOME,        KC_PGDN,        KC_PAGE_UP,     KC_END,         KC_NO,                                          KC_AUDIO_MUTE,  KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_MEDIA_PREV_TRACK,KC_MEDIA_PLAY_PAUSE,KC_MEDIA_NEXT_TRACK,
-                                                    KC_TRANSPARENT, KC_NO,                                          KC_NO,          EMX_EXPAND
+    KC_NO,          KC_HOME,        KC_PGDN,        KC_PAGE_UP,     KC_END,         KC_NO,                                          CC(KC_G),       CC(KC_V),       CC(KC_W),       CC(KC_K),       CC(KC_O),       CC(KC_L),
+                                                    KC_TRANSPARENT, KC_NO,                                          CC(KC_R),       EMX_EXPAND
+  ),
+  [3] = LAYOUT_voyager(
+    QK_LLCK,        THEME_1,        THEME_2,        THEME_3,        THEME_4,        THEME_5,                                        RM_TOGG,        LED_BRIGHT,     LED_DIM,        KC_NO,          KC_NO,          TG(3),
+    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,
+    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,
+    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_AUDIO_MUTE,  KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_MEDIA_PREV_TRACK,KC_MEDIA_PLAY_PAUSE,KC_MEDIA_NEXT_TRACK,
+                                                    KC_NO,          KC_NO,                                          KC_NO,          KC_NO
   ),
 };
 
@@ -110,11 +128,13 @@ static uint16_t dm_timer     = 0;
 bool dynamic_macro_record_start_user(int8_t direction) { dm_recording = direction > 0 ? 1 : 2; return true; }
 bool dynamic_macro_record_end_user(int8_t direction)   { dm_recording = 0; return true; }
 
-// Not recorded: the macro keys, Layer Lock, and layer-key holds (Space for
-// layer 2, the number thumbs). Otherwise replaying could leave a layer stuck on.
+// Not recorded: the macro keys, Layer Lock, the layer 3 toggle, and layer-key
+// holds (Space for layer 2, the number thumbs).
+// Otherwise replaying could leave a layer stuck on.
 // Taps of those thumbs (Space, Backspace, Repeat) are recorded as usual.
 bool dynamic_macro_valid_key_user(uint16_t keycode, keyrecord_t *record) {
   if (keycode == DM_KEY1 || keycode == DM_KEY2 || keycode == QK_LLCK) return false;
+  if (IS_QK_TOGGLE_LAYER(keycode)) return false;
   if (IS_QK_LAYER_TAP(keycode) && record->tap.count == 0) return false;
   return true;
 }
@@ -130,15 +150,18 @@ bool dynamic_macro_valid_key_user(uint16_t keycode, keyrecord_t *record) {
 // - Boot: QK_BOOT (flash mode).
 // - Held mod: a mod-tap key that is pressed while its modifier is active.
 // - Caps Word, base layer: letters and the Caps Word key while Caps Word is on.
-// - Groups, layers 1 and 2: numbers, arrows, Home/End/PgUp/PgDn, F-keys, media.
-// - Theme keys (layer 2): each shows its own theme's base colour.
+// - Groups, layers 1-3: numbers, arrows, Home/End/PgUp/PgDn, F-keys, media.
+// - Theme keys (layer 3): each shows its own theme's base colour.
 // - Layer Lock key (top left): white while the current layer is locked.
-// - Macro keys (top right; layer 2 J and L): red while their macro is recording.
+// - Macro keys (layer 2 J and L): red while their macro is recording.
+// - Emacs keys (layer 2): C-c keys, C-=, C-< and C->.
 // - Mod-tap, base layer: home-row mods and Enter/Meta.
-// - Layer tap, base layer: Space, Down, Up show the colour of the layer they open.
+// - Layer keys: Space, Repeat, Backspace (base layer) and the layer 3 toggle
+//   (top right) show the colour of the layer they open.
 // Everything else has the layer colour.
 //
-// Themes (2026-11-06): hold Space, then 1-5 picks a theme (kept after unplugging),
+// Themes (2026-11-06): tap the top-right key (layer 3, 2026-11-07), then 1-5
+// picks a theme (kept after unplugging); tap top right again to go back.
 // 6 turns all LEDs on/off (RM_TOGG). Lights also go off after 5 minutes idle
 // (RGB_MATRIX_TIMEOUT in config.h).
 // Brightness modes (2026-11-06), kept after unplugging: 7 = Bright toggle (every
@@ -149,7 +172,7 @@ enum led_kind {
   LED_NORMAL,  // layer colour
   LED_UNUSED, LED_BOOT, LED_MOD_HELD, LED_MOD_TAP,
   LED_NUMBER, LED_ARROW, LED_NAV, LED_FKEY, LED_MEDIA,
-  LED_CAPS_WORD,
+  LED_CAPS_WORD, LED_EMACS,
   LED_KIND_COUNT,
   LED_LAYER_TAP = LED_KIND_COUNT,  // colour = theme layer colour of the target layer
   LED_THEME,                       // colour = that theme's base colour
@@ -158,7 +181,7 @@ enum led_kind {
   LED_MACRO_KEY,                   // macro key: red while its slot is recording
 };
 
-#define THEME_LAYERS 3
+#define THEME_LAYERS 4
 #define LAYER_TAP_VAL 230  // brightness of the layer-tap thumb keys and theme keys
 #define BRIGHT_VAL    200  // Bright mode: minimum brightness of every lit colour
 #define DIM_PERCENT    35  // Dim mode: brightness of every colour, in percent
@@ -171,7 +194,7 @@ typedef struct {
 static const led_theme_t PROGMEM themes[] = {
   // 1. Green + coral: green base, violet numbers layer, blue FN layer.
   {
-    .layer = {{87, 245, 150}, {191, 227, 150}, {139, 184, 150}},
+    .layer = {{87, 245, 150}, {191, 227, 150}, {139, 184, 150}, {21, 255, 150}},
     .kind = {
       [LED_UNUSED]    = {  0,   0,   0},  // off
       [LED_BOOT]      = {  0, 255, 255},  // red
@@ -183,11 +206,12 @@ static const led_theme_t PROGMEM themes[] = {
       [LED_FKEY]      = { 43, 255, 230},  // yellow
       [LED_MEDIA]     = {223, 255, 230},  // pink
       [LED_CAPS_WORD] = {206, 255, 230},  // magenta
+      [LED_EMACS]     = {128, 255, 230},  // cyan
     },
   },
   // 2. Teal + coral: teal base, pink numbers layer, deep blue FN layer.
   {
-    .layer = {{120, 255, 150}, {225, 200, 150}, {165, 255, 150}},
+    .layer = {{120, 255, 150}, {225, 200, 150}, {165, 255, 150}, {191, 227, 150}},
     .kind = {
       [LED_UNUSED]    = {  0,   0,   0},  // off
       [LED_BOOT]      = {  0, 255, 255},  // red
@@ -199,12 +223,13 @@ static const led_theme_t PROGMEM themes[] = {
       [LED_FKEY]      = { 43, 255, 230},  // yellow
       [LED_MEDIA]     = {128, 255, 230},  // cyan
       [LED_CAPS_WORD] = {206, 255, 230},  // magenta
+      [LED_EMACS]     = { 21, 255, 230},  // orange
     },
   },
   // 3. Las Vegas: neon purple base, gold mods, hot pink numbers layer,
   //    electric blue FN layer, cyan Caps Word.
   {
-    .layer = {{196, 255, 150}, {235, 255, 150}, {160, 255, 150}},
+    .layer = {{196, 255, 150}, {235, 255, 150}, {160, 255, 150}, {64, 255, 150}},
     .kind = {
       [LED_UNUSED]    = {  0,   0,   0},  // off
       [LED_BOOT]      = {  0, 255, 255},  // red
@@ -216,12 +241,13 @@ static const led_theme_t PROGMEM themes[] = {
       [LED_FKEY]      = { 32, 255, 230},  // gold
       [LED_MEDIA]     = {235, 255, 230},  // hot pink
       [LED_CAPS_WORD] = {128, 255, 230},  // neon cyan
+      [LED_EMACS]     = { 64, 255, 230},  // lime
     },
   },
   // 4. Classic: the original blue base, indigo numbers layer, green FN layer,
   //    amber mods.
   {
-    .layer = {{139, 184, 150}, {164, 227, 150}, {87, 245, 150}},
+    .layer = {{139, 184, 150}, {164, 227, 150}, {87, 245, 150}, {120, 255, 150}},
     .kind = {
       [LED_UNUSED]    = {  0,   0,   0},  // off
       [LED_BOOT]      = {  0, 255, 255},  // red
@@ -233,11 +259,12 @@ static const led_theme_t PROGMEM themes[] = {
       [LED_FKEY]      = { 43, 255, 230},  // yellow
       [LED_MEDIA]     = {223, 255, 230},  // pink
       [LED_CAPS_WORD] = {206, 255, 230},  // magenta
+      [LED_EMACS]     = {128, 255, 230},  // cyan
     },
   },
   // 5. Dark (ef-themes style): backgrounds barely lit, accents bright.
   {
-    .layer = {{139, 120, 25}, {191, 200, 30}, {87, 200, 30}},
+    .layer = {{139, 120, 25}, {191, 200, 30}, {87, 200, 30}, {21, 200, 30}},
     .kind = {
       [LED_UNUSED]    = {  0,   0,   0},  // off
       [LED_BOOT]      = {  0, 255, 200},  // red
@@ -249,6 +276,7 @@ static const led_theme_t PROGMEM themes[] = {
       [LED_FKEY]      = { 43, 230, 180},  // yellow
       [LED_MEDIA]     = {223, 230, 180},  // pink
       [LED_CAPS_WORD] = {206, 230, 200},  // magenta
+      [LED_EMACS]     = {128, 230, 180},  // cyan
     },
   },
 };
@@ -299,6 +327,12 @@ static uint8_t group_kind(uint16_t kc) {
   return LED_NORMAL;
 }
 
+static bool is_emacs_key(uint16_t kc) {
+  return (kc >= EMX_CC_A && kc <= EMX_CC_Z) || (kc >= EMX_CX_A && kc <= EMX_CX_Z) ||
+         kc == EMX_EXPAND ||
+         kc == EMX_MC_PREV || kc == EMX_MC_NEXT;
+}
+
 static void find_led_kinds(void) {
   for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
     for (uint8_t col = 0; col < MATRIX_COLS; col++) {
@@ -328,6 +362,12 @@ static void find_led_kinds(void) {
           kind = LED_MODE_KEY;
           arg  = kc == LED_BRIGHT ? MODE_BRIGHT : MODE_DIM;
         }
+        else if (IS_QK_TOGGLE_LAYER(kc) &&
+                 QK_TOGGLE_LAYER_GET_LAYER(kc) < THEME_LAYERS) {
+          kind = LED_LAYER_TAP;
+          arg  = QK_TOGGLE_LAYER_GET_LAYER(kc);
+        }
+        else if (is_emacs_key(kc))               kind = LED_EMACS;
         else if (layer > 0)                      kind = group_kind(kc);
         else if (IS_QK_MOD_TAP(base))            kind = LED_MOD_TAP;
         else if (IS_QK_LAYER_TAP(base) &&
@@ -423,6 +463,9 @@ bool rgb_matrix_indicators_user(void) {
       case 2:
         set_layer_color(2);
         break;
+      case 3:
+        set_layer_color(3);
+        break;
      default:
         if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
           rgb_matrix_set_color_all(0, 0, 0);
@@ -442,7 +485,7 @@ bool rgb_matrix_indicators_user(void) {
 
 // The Repeat thumb itself is never the key to repeat.
 bool remember_last_key_user(uint16_t keycode, keyrecord_t *record, uint8_t *remembered_mods) {
-  return keycode != REP_NUM;
+  return keycode != REP_NUM && !IS_QK_TOGGLE_LAYER(keycode);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -484,6 +527,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     }
     break;
+  case EMX_CC_A ... EMX_CC_Z:  // C-c then the letter
+    if (record->event.pressed) {
+      tap_code16(LCTL(KC_C));
+      tap_code(KC_A + (keycode - EMX_CC_A));
+    }
+    return false;
+  case EMX_CX_A ... EMX_CX_Z:  // C-x then the letter
+    if (record->event.pressed) {
+      tap_code16(LCTL(KC_X));
+      tap_code(KC_A + (keycode - EMX_CX_A));
+    }
+    return false;
   case THEME_1 ... THEME_5:
     if (record->event.pressed) set_theme(keycode - THEME_1);
     return false;
